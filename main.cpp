@@ -6,7 +6,7 @@ Assignment: Managing and collecting tree shade data per block on the Logan neigh
 Description: user interface with our tree list data
 */
 
-#include "linked_list.hpp"
+#include "linked_list.cpp"
 
 int main()
 {   
@@ -20,9 +20,8 @@ int main()
     int block_id;
     char choice, reload, dir;
 
-    do
-    {
-    
+  do
+  {
     cout << "Enter the street ID to search: ";
     cin >> street_id;
 
@@ -33,56 +32,58 @@ int main()
 
     cout << "Do you want to check another block or street? (b/s): ";    
     cin >> reload;
-    }
+  } 
     while (reload == 'S' || reload == 's');
-    
+
     doubleNode* cur = treeList.Search(street_id, block_id);
-    
+
     do
     {
-        cout << "Do you want to go forward or go backward (F/B)? or Q to quit: ";
-        cin >> dir;
+      cout << "Do you want to go forward or go backward (F/B)? or Q to quit: ";
+      cin >> dir;
 
-        if (dir == 'F' || dir == 'f')
+      switch (dir)
+      {
+        case 'F': 
+        case 'f':
+        if (cur->next != nullptr && cur->next->street_id == street_id)
         {
-            if (cur->next != nullptr && cur->next->street_id == street_id)  
-            {
-                cur = cur->next;  
-                cout << "Tree Number: " << cur->treeNum << ", North distance of the block: " << cur->NorthDistance << " ft, South distance of the block: " << cur->SouthDistance << " ft\n";
-            }
-            else
-            {
-                cout << "\nYou have reached the end of the street \n" << endl;
-                cout << "Current tree Number: " << cur->treeNum << ", North distance of the block: " << cur->NorthDistance << " ft, South distance of the block: " << cur->SouthDistance << " ft\n";
-            }
+          cur = cur->next;  
+          cout << "Tree Number: " << cur->treeNum << ", North distance of the block: " << cur->NorthDistance << " ft, South distance of the block: " << cur->SouthDistance << " ft\n";
         }
-        else if (dir == 'B' || dir == 'b')
+        else {
+          cout << "\nYou have reached the end of the street\n" << endl;
+                  cout << "Current tree Number: " << cur->treeNum << ", North distance of the block: " << cur->NorthDistance << " ft, South distance of the block: " << cur->SouthDistance << " ft\n";
+        }
+        break;
+        
+        case 'B': 
+        case 'b':
+        if (cur->prev != nullptr && cur->prev->street_id == street_id)
         {
-            if (cur->prev != nullptr && cur->prev->street_id == street_id)
-            {
-                cur = cur->prev;  
-                cout << "Tree Number: " << cur->treeNum << ", North distance of the block: " << cur->NorthDistance << " ft, South distance of the block: " << cur->SouthDistance << " ft\n";
-            }
-            else
-            {
-                cout << "\nYou have reached the start of the street \n" << endl;
-                cout << "Current tree Number: " << cur->treeNum << ", North distance of the block: " << cur->NorthDistance << " ft, South distance of the block: " << cur->SouthDistance << " ft\n";
-            }
+          cur = cur->prev;  
+          cout << "Tree Number: " << cur->treeNum << ", North distance of the block: " << cur->NorthDistance << " ft, South distance of the block: " << cur->SouthDistance << " ft\n";
         }
-        else if (dir == 'Q' || dir == 'q')
-        {
-            // Exit the loop if the user chooses to quit
-            break;
+        else {
+          cout << "\nYou have reached the start of the street\n" << endl;
+          cout << "Current tree Number: " << cur->treeNum << ", North distance of the block: " << cur->NorthDistance << " ft, South distance of the block: " << cur->SouthDistance << " ft\n";
         }
-        else
-        {
-            // Handle invalid input
-            cout << "Invalid choice, please try again." << endl;
-        }
-    }
-    while(reload == 'b' || reload == 'B');
+        break;
 
-    treeList.Delete();
-    return 0;
+        case 'Q': 
+        case 'q':
+        // Exit the loop
+        break;
+
+        default:
+        // Handle invalid input
+        cout << "Invalid choice, please try again." << endl;
+        break;
+      }
+  }
+      while (dir != 'Q' && dir != 'q');
+
+      treeList.Delete(street_id);  // Delete the node
+      return 0;
 }
 

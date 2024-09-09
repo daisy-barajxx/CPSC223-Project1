@@ -97,7 +97,7 @@ void ListD::Delete(int street_id)
       tail = nullptr;  // If head becomes nullptr, the list is empty
       }
     delete cur;
-    cout << "Deleted street_id: " << street_id << endl;
+    cout << endl;
     return;
   }
   
