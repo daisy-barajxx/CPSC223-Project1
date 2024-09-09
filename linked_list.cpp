@@ -1,3 +1,10 @@
+/* 
+Group Name: Jake K, Liya T, Keyu C, Daisy B
+Class: CPSC223, Section 1
+Date Submitted: September 8, 2024
+Assignment: Managing and collecting tree shade data per block on the Logan neighborhood
+Description: doubly linked list implementation of the tree data
+*/
 #include "linked_list.hpp"
 
 // Constructor
@@ -128,7 +135,8 @@ void ListD::Delete(int street_id)
 
 void ListD::PrintForward()
 {
-  if (head == nullptr) {
+  if (head == nullptr) 
+  {
     cout << "List is empty." << endl;
     return;
   }
@@ -142,6 +150,26 @@ void ListD::PrintForward()
          << ", South Distance: " << temp->SouthDistance
          << endl;
     temp = temp->next;
+  }
+}
+
+void ListD::PrintBackward()
+{
+  if (head == nullptr)
+  {
+    cout << "List is empty." << endl;
+    return;
+  }
+  
+  doubleNode* temp = tail;
+  while (temp != nullptr) {
+    cout << "Street: " << temp->street_id
+    << ", Block: " << temp->block_id
+    << ", Tree #: " << temp->treeNum
+    << ", North Distance: " << temp->NorthDistance
+    << ", South Distance: " << temp->SouthDistance
+    << endl;
+    temp = temp->prev;
   }
 }
 
